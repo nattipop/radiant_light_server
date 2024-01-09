@@ -239,5 +239,5 @@ app.post("/login", cors(), async (req, res) => {
 // USER AUTHENTICATION END
 
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
+  console.log(`Listening at https://radiant-light-server-b649d90c9bb7.herokuapp.com/${port}`)
 })
