@@ -13,11 +13,25 @@ const EventSchema = new Schema({
 
 const PhotoSchema = new Schema({
   title: String,
-  description: String,
   photo_id: String,
   url: String,
   category: String
 })
 
+const UserSchema = new Schema({
+  full_name: String,
+  username: String,
+  password: String,
+  token: String,
+})
+
+const ServiceSchema = new Schema({
+  title: String,
+  service_id: String,
+  price: String,
+  
+})
+
 exports.Photo = mongoose.model("photo", PhotoSchema);
 exports.Event = mongoose.model("event", EventSchema);
+exports.User = mongoose.model("user", UserSchema);
