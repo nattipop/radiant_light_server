@@ -29,9 +29,11 @@ const ServiceSchema = new Schema({
   title: String,
   service_id: String,
   price: String,
-  
+  description: String,
+  picture_url: String
 })
 
 exports.Photo = mongoose.model("photo", PhotoSchema);
 exports.Event = mongoose.model("event", EventSchema);
 exports.User = mongoose.model("user", UserSchema);
+exports.Service = mongoose.model("service", ServiceSchema);

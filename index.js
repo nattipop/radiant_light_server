@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 5000;
 const cors = require("cors");
-const { Photo, Event, User } = require("./models");
+const { Photo, Event, User, Service } = require("./models");
 const jwt = require("jsonwebtoken");
 
 app.use(express.urlencoded({extended: true}));
@@ -23,7 +23,6 @@ app.get("/", cors(), async (req, res) => {
 // PHOTOS API CALLS START
 app.post("/new-photo", cors(), async (req, res) => {
   const data = req.body;
-  console.log(req.body)
   
   if(!data.title) res.status(422).send("Photo title required.");
   if(!data.photo_id) res.status(422).send("Photo id required.");
@@ -55,11 +54,11 @@ app.delete("/delete-photo/:photo_id", cors(), async (req, res) => {
 app.get("/all-photos", cors(), (req, res) => {
   Photo.find({}).then((err, photos) => {
     if(err){
-      res.send(err);
+      return res.send(err);
     }
 
     if(!photos){
-      res.status(404).send("No photos to show.")
+      return res.status(404).send("No photos to show.")
     }
     res.status(200).send(photos)
   })
@@ -70,7 +69,7 @@ app.get("/photos/:category", cors(), async (req, res) => {
 
   await Photo.find({ category: category }).then(photos => {
     if(!photos){
-      res.status(404).send("No photos to show.")
+      return res.status(404).send("No photos to show.")
     }
     
     res.status(200).send(photos)
@@ -120,11 +119,11 @@ app.post("/new-event", cors(), async (req, res) => {
 app.get("/all-events", cors(), (req, res) => {
   Event.find({}).then((err, events) => {
     if(err){
-      res.send(err);
+      return res.send(err);
     }
   
     if(!events){
-      res.status(404).send("No events to show.")
+      return res.status(404).send("No events to show.")
     }
     res.status(200).send(events)
   })
@@ -156,7 +155,62 @@ app.delete("/delete-event/:event_id", cors(), async (req, res) => {
 // EVENTS API CALLS END
 
 // SERVICES API CALLS START
-// SERVICES APU CALLS END
+app.post("/new-service", cors(), async (req, res) => {
+  const data = req.body;
+  
+  if(!data.title) res.status(422).send("Service title required.");
+  if(!data.service_id) res.status(422).send("Service id required.");
+  if(!data.price) res.status(422).send("Service price required.");
+
+  const service = new Service({
+    title: data.title,
+    service_id: data.service_id,
+    price: data.price,
+    description: data.description,
+    picture_url: data.picture_url
+  });
+
+  service.save()
+  res.status(200).send("Successfully added service.")
+});
+
+app.get("/all-services", cors(), (req, res) => {
+  Service.find({}).then((err, services) => {
+    if(err){
+      return res.send(err);
+    }
+  
+    if(!services){
+      return res.status(404).send("No services to show.")
+    }
+    res.status(200).send(services)
+  })
+});
+
+app.get("/service-by-id/:service_id", cors(), async (req, res) => {
+  const service_id = req.params.service_id;
+
+  await Service.findOne({ service_id: service_id }).then(service => {
+    if(!service){
+      res.status(404).send("Could not find service with that id.")
+    }
+
+    res.status(200).send(service);
+  })
+});
+
+app.delete("/delete-service/:service_id", cors(), async (req, res) => {
+  const service_id = req.params.service_id;
+
+  await Service.findOneAndDelete({ service_id: service_id }).then(service => {
+    if(!service) {
+      res.status(404).send("Could not delete that service because it does not exist.")
+    }
+
+    res.status(200).send(`Service ${service_id} successfully deleted.`)
+  })
+})
+// SERVICES API CALLS END
 
 // USER AUTHENTICATION START
 app.post("/login", cors(), async (req, res) => {
