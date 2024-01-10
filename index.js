@@ -91,6 +91,29 @@ app.get("/photo-by-id/:photo_id", cors(), async (req, res) => {
     res.status(200).send(photo)
   })
 });
+
+app.put("/photos/:photo_id", (req, res) => {
+  const { photo_id } = req.params;
+  console.log(req.body);
+
+  if(!req.body.title) return res.status(422).send("There was an error with the format of your request. Title required.");
+
+  if(!req.body.url) return res.status(422).send("There was an error with the format of your request. Url required.");
+
+  if(!req.body.category) return res.status(422).send("There was an error with the format of your request. Category required.");
+
+  Photo.findOneAndUpdate({ photo_id: photo_id }, {"$set": {
+    title: req.body.title,
+    description: req.body.description,
+    url: req.body.url,
+    category: req.body.category
+  }}, { "new": true }, (err, photo) => {
+    if(err) {
+      return res.send(err)
+    }
+    res.status(200).send(photo)
+  })
+})
 // PHOTOS API CALLS END
 
 // EVENTS API CALLS START

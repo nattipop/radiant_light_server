@@ -14,6 +14,7 @@ const EventSchema = new Schema({
 const PhotoSchema = new Schema({
   title: String,
   photo_id: String,
+  description: String,
   url: String,
   category: String
 })
