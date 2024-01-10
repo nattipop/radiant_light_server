@@ -92,7 +92,7 @@ app.get("/photo-by-id/:photo_id", cors(), async (req, res) => {
   })
 });
 
-app.put("/photos/:photo_id", (req, res) => {
+app.put("/photos/:photo_id", cors(), (req, res) => {
   const photo_id = req.params.photo_id;
   console.log(req.body);
 
