@@ -107,7 +107,7 @@ app.put("/photos/:photo_id", (req, res) => {
     description: req.body.description,
     url: req.body.url,
     category: req.body.category
-  }}, { "new": true }, (err, photo) => {
+  }}, { "new": true }).then((err, photo) => {
     if(err) {
       return res.send(err)
     }
