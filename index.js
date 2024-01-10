@@ -93,7 +93,7 @@ app.get("/photo-by-id/:photo_id", cors(), async (req, res) => {
 });
 
 app.put("/photos/:photo_id", (req, res) => {
-  const { photo_id } = req.params;
+  const photo_id = req.params.photo_id;
   console.log(req.body);
 
   if(!req.body.title) return res.status(422).send("There was an error with the format of your request. Title required.");
