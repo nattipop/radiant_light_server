@@ -25,27 +25,20 @@ app.get("/", cors(), async (req, res) => {
 })
 
 app.get("/joy", cors(), async (req, res) => {
-  const query = await Joy.find().countDocuments();
-  console.log(query)
-  res.status(200).send("check logs")
-  // query.count().then((err, count) => {
-  //   if(err) {
-  //     return res.send(err)
-  //   }
-  //   const random = Math.floor(Math.random() * count);
+  const count = await Joy.find().countDocuments();
+  const random = Math.floor(Math.random() * count);
 
-  //   Joy.findOne().skip(random).then((err, joy) => {
-  //     if(err) {
-  //       return res.send(err)
-  //     };
+  Joy.findOne().skip(random).then((err, joy) => {
+    if(err) {
+      return res.status(500).send(err)
+    };
   
-  //     if(!joy) {
-  //       return res.status(404).send("No message.")
-  //     };
+    if(!joy) {
+      return res.status(404).send("No message.")
+    };
   
-  //     res.status(200).send(joy);
-  //   });
-  // })
+    res.status(200).send(joy);
+  })
 })
 
 // PHOTOS API CALLS START
