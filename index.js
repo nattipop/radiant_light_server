@@ -45,7 +45,7 @@ app.get("/joy", cors(), async (req, res) => {
   
   //     res.status(200).send(joy);
   //   });
-  })
+  // })
 })
 
 // PHOTOS API CALLS START
