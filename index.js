@@ -25,25 +25,26 @@ app.get("/", cors(), async (req, res) => {
 })
 
 app.get("/joy", cors(), async (req, res) => {
-  const query = await Joy.find();
-    
-  query.count().then((err, count) => {
-    if(err) {
-      return res.send(err)
-    }
-    const random = Math.floor(Math.random() * count);
+  const query = await Joy.find().countDocuments();
+  console.log(query)
+  res.send(query)
+  // query.count().then((err, count) => {
+  //   if(err) {
+  //     return res.send(err)
+  //   }
+  //   const random = Math.floor(Math.random() * count);
 
-    Joy.findOne().skip(random).then((err, joy) => {
-      if(err) {
-        return res.send(err)
-      };
+  //   Joy.findOne().skip(random).then((err, joy) => {
+  //     if(err) {
+  //       return res.send(err)
+  //     };
   
-      if(!joy) {
-        return res.status(404).send("No message.")
-      };
+  //     if(!joy) {
+  //       return res.status(404).send("No message.")
+  //     };
   
-      res.status(200).send(joy);
-    });
+  //     res.status(200).send(joy);
+  //   });
   })
 })
 
