@@ -30,7 +30,7 @@ app.get("/joy", cors(), async (req, res) => {
 
   Joy.findOne().skip(random).then((err, joy) => {
     if(err) {
-      return res.status(500).send(err)
+      return res.status(200).send(err)
     };
   
     if(!joy) {
