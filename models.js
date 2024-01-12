@@ -8,7 +8,8 @@ const EventSchema = new Schema({
   picture_url: String,
   date: Date,
   time: String,
-  location: String
+  location: String,
+  expires: Date
 })
 
 const PhotoSchema = new Schema({

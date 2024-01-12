@@ -219,7 +219,7 @@ app.get("/service-by-id/:service_id", cors(), async (req, res) => {
 
   await Service.findOne({ service_id: service_id }).then(service => {
     if(!service){
-      res.status(404).send("Could not find service with that id.")
+      return res.status(404).send("Could not find service with that id.")
     }
 
     res.status(200).send(service);
