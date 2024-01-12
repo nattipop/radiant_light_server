@@ -27,7 +27,7 @@ app.get("/", cors(), async (req, res) => {
 app.get("/joy", cors(), async (req, res) => {
   const query = await Joy.find().countDocuments();
   console.log(query)
-  res.send(query)
+  res.status(200).send("check logs")
   // query.count().then((err, count) => {
   //   if(err) {
   //     return res.send(err)
