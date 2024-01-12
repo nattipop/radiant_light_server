@@ -178,7 +178,38 @@ app.delete("/delete-event/:event_id", cors(), async (req, res) => {
 
     res.status(200).send(`Event ${event_id} successfully deleted.`)
   })
-})
+});
+
+app.put("/events/:event_id", cors(), (req, res) => {
+  const event_id = req.params.event_id;
+  console.log(req.body);
+  if(!req.body.title) return res.status(422).send("There was an error with the format of your request. Title required.");
+
+  if(!req.body.description) return res.status(422).send("There was an error with the format of your request. Description required.");
+
+  if(!req.body.date) return res.status(422).send("There was an error with the format of your request. Date required.");
+
+  if(!req.body.time) return res.status(422).send("There was an error with the format of your request. Time required.");
+
+  if(!req.body.location) return res.status(422).send("There was an error with the format of your request. Location required.");
+
+  if(!req.body.expires) return res.status(422).send("There was an error with the format of your request. Expiration required.");
+
+  Event.findOneAndUpdate({ event_id: event_id }, {"$set": {
+    title: req.body.title,
+    description: req.body.description,
+    picture_url: req.body.picture_url,
+    date: req.body.date,
+    time: req.body.time,
+    location: req.body.location,
+    expires: req.body.expires
+  }}, { "new": true }).then((err, event) => {
+    if(err) {
+      return res.send(err)
+    }
+    res.status(200).send(event);
+  })
+});
 // EVENTS API CALLS END
 
 // SERVICES API CALLS START
@@ -223,6 +254,27 @@ app.get("/service-by-id/:service_id", cors(), async (req, res) => {
     }
 
     res.status(200).send(service);
+  })
+});
+
+app.put("/services/:service_id", cors(), (req, res) => {
+  const service_id = req.params.service_id;
+  console.log(req.body);
+
+  if(!req.body.title) return res.status(422).send("There was an error with the format of your request. Title required.");
+
+  if(!req.body.price) return res.status(422).send("There was an error with the format of your request. Price required.");
+
+  Service.findOneAndUpdate({ service_id: service_id }, {"$set": {
+    title: req.body.title,
+    description: req.body.description,
+    picture_url: req.body.picture_url,
+    price: req.body.price,
+  }}, { "new": true }).then((err, service) => {
+    if(err) {
+      return res.send(err)
+    }
+    res.status(200).send(service)
   })
 });
 
