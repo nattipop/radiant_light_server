@@ -33,9 +33,14 @@ const ServiceSchema = new Schema({
   price: String,
   description: String,
   picture_url: String
+});
+
+const JoySchema = new Schema({
+  message: String
 })
 
 exports.Photo = mongoose.model("photo", PhotoSchema);
 exports.Event = mongoose.model("event", EventSchema);
 exports.User = mongoose.model("user", UserSchema);
 exports.Service = mongoose.model("service", ServiceSchema);
+exports.Joy = mongoose.model("joy", JoySchema);

@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 const port = 5000 || process.env.PORT;
 const cors = require("cors");
-const { Photo, Event, User, Service } = require("./models");
+const { Photo, Event, User, Service, Joy } = require("./models");
 const jwt = require("jsonwebtoken");
 
 app.use(express.urlencoded({extended: true}));
@@ -22,6 +22,24 @@ db.once("open", () => console.log("connected to database"))
 
 app.get("/", cors(), async (req, res) => {
   res.send("this is working")
+})
+
+app.get("/joy", cors(), async (req, res) => {
+  Joy.count().exec((err, count) => {
+    const random = Math.floor(Math.random() * count);
+
+    Joy.findOne().skip(random).then((err, joy) => {
+      if(err) {
+        return res.send(err)
+      };
+
+      if(!joy) {
+        return res.status(404).send("No message.")
+      };
+
+      res.status(200).send(joy);
+    });
+  })
 })
 
 // PHOTOS API CALLS START
