@@ -138,7 +138,8 @@ app.post("/new-event", cors(), async (req, res) => {
   if(!data.description) res.status(422).send("Event description required.");
   if(!data.picture_url) res.status(422).send("Event photo url required.");
   if(!data.date) res.status(422).send("Event date required.");
-  if(!data.time) res.status(422).send("Event time required.");
+  if(!data.event_begins) res.status(422).send("Event begin time required.");
+  if(!data.event_ends) res.status(422).send("Event end time required.");
   if(!data.location) res.status(422).send("Event location required.");
 
 
@@ -148,7 +149,8 @@ app.post("/new-event", cors(), async (req, res) => {
     description: data.description,
     picture_url: data.picture_url,
     date: data.date,
-    time: data.time,
+    event_begins: data.event_begins,
+    event_ends: data.event_ends,
     location: data.location
   });
 
@@ -202,7 +204,9 @@ app.put("/events/:event_id", cors(), (req, res) => {
 
   if(!req.body.date) return res.status(422).send("There was an error with the format of your request. Date required.");
 
-  if(!req.body.time) return res.status(422).send("There was an error with the format of your request. Time required.");
+  if(!req.body.event_begins) return res.status(422).send("There was an error with the format of your request. Event begin time required.");
+
+  if(!req.body.event_ends) return res.status(422).send("There was an error with the format of your request. Event end time required.");
 
   if(!req.body.location) return res.status(422).send("There was an error with the format of your request. Location required.");
 
@@ -213,7 +217,8 @@ app.put("/events/:event_id", cors(), (req, res) => {
     description: req.body.description,
     picture_url: req.body.picture_url,
     date: req.body.date,
-    time: req.body.time,
+    event_begins: req.body.event_begins,
+    event_ends: req.body.event_ends,
     location: req.body.location,
     expires: req.body.expires
   }}, { "new": true }).then((err, event) => {
