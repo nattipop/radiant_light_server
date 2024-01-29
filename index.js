@@ -138,8 +138,7 @@ app.post("/new-event", cors(), async (req, res) => {
   if(!data.description) res.status(422).send("Event description required.");
   if(!data.picture_url) res.status(422).send("Event photo url required.");
   if(!data.date) res.status(422).send("Event date required.");
-  if(!data.event_begins) res.status(422).send("Event begin time required.");
-  if(!data.event_ends) res.status(422).send("Event end time required.");
+  if(!data.time) res.status(422).send("Event time required.");
   if(!data.location) res.status(422).send("Event location required.");
 
 
@@ -149,8 +148,7 @@ app.post("/new-event", cors(), async (req, res) => {
     description: data.description,
     picture_url: data.picture_url,
     date: data.date,
-    event_begins: data.event_begins,
-    event_ends: data.event_ends,
+    time: data.time,
     location: data.location
   });
 
