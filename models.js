@@ -7,10 +7,9 @@ const EventSchema = new Schema({
   description: String,
   picture_url: String,
   date: String,
-  event_begins: String,
-  event_ends: String,
+  time: String,
   location: String,
-  expires: Date
+  expires: String
 })
 
 const PhotoSchema = new Schema({
