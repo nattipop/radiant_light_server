@@ -140,10 +140,12 @@ app.post("/new-event", cors(), async (req, res) => {
   if(!data.date) res.status(422).send("Event date required.");
   if(!data.time) res.status(422).send("Event time required.");
   if(!data.location) res.status(422).send("Event location required.");
+  if(!data.expires) res.status(422).send("Event expiration required.");
 
 
   const event = new Event({
     event_id: data.event_id,
+    expires: data.expires,
     title: data.title,
     description: data.description,
     picture_url: data.picture_url,
