@@ -263,7 +263,7 @@ app.get("/all-services", cors(), (req, res) => {
 app.get("/service/:category", cors(), async (req, res) => {
   const category = req.params.category;
 
-  await Service.find({ category: category }).sort({order:-1}).then(services => {
+  await Service.find({ category: category }).sort({order:1}).then(services => {
     if(!services){
       return res.status(404).send("No Services to show.")
     }
