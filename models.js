@@ -32,7 +32,9 @@ const ServiceSchema = new Schema({
   service_id: String,
   price: String,
   description: String,
-  picture_url: String
+  picture_url: String,
+  category: String,
+  order: Number
 });
 
 const JoySchema = new Schema({
