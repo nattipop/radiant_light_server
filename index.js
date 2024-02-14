@@ -234,13 +234,16 @@ app.post("/new-service", cors(), async (req, res) => {
   if(!data.title) res.status(422).send("Service title required.");
   if(!data.service_id) res.status(422).send("Service id required.");
   if(!data.price) res.status(422).send("Service price required.");
+  if(!data.category) res.status(422).send("Service category required.");
 
   const service = new Service({
     title: data.title,
     service_id: data.service_id,
     price: data.price,
     description: data.description,
-    picture_url: data.picture_url
+    picture_url: data.picture_url,
+    category: data.category,
+    order: data.order
   });
 
   service.save()
@@ -292,11 +295,15 @@ app.put("/services/:service_id", cors(), (req, res) => {
 
   if(!req.body.price) return res.status(422).send("There was an error with the format of your request. Price required.");
 
+  if(!req.body.category) return res.status(422).send("There was an error with the format of your request. Category required.");
+
   Service.findOneAndUpdate({ service_id: service_id }, {"$set": {
     title: req.body.title,
     description: req.body.description,
     picture_url: req.body.picture_url,
     price: req.body.price,
+    category: req.body.category,
+    order: req.body.order
   }}, { "new": true }).then((err, service) => {
     if(err) {
       return res.send(err)
